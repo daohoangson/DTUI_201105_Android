@@ -8,24 +8,14 @@ package com.group5.android.fd;
  */
 public class FdConfig {
 	/**
-	 * The server root address. This was planned to become a preference but time
-	 * was short so here it is. The information below using 10.0.2.2 as the
-	 * server address with an assumption that you will test in an Android
-	 * emulator while running the server in your dev machine. Feel free to
-	 * change it to suit your needs (and environments). JUST PLEASE DO NOT
-	 * FORGET THE BACKSLASH AT THE END!
+	 * The server address.The information below using 10.0.2.2 as the server
+	 * address with an assumption that you will test in an Android emulator
+	 * while running the server in your dev machine. Feel free to change it to
+	 * suit your needs (and environments). JUST PLEASE DO NOT FORGET THE
+	 * BACKSLASH AT THE END!
 	 */
-	final public static String SERVER_ROOT = "http://10.0.2.2/dtui/";
-
-	/**
-	 * Interval for new task update
-	 */
-	final public static int NEW_TASK_INTERVAL = 5000;
-
-	/**
-	 * Interval for new task update (but slower than normal)
-	 */
-	final public static int NEW_TASK_INTERVAL_SLOWER = 10000;
+	// final public static String SERVER_ADDRESS = "http://192.168.1.100/dtui/";
+	final public static String SERVER_ADDRESS = "http://k53cc.org/dtui_group5/";
 
 	/**
 	 * The entry point for the FastDely system. If you are not certain about

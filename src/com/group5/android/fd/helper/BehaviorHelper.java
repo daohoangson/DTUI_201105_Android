@@ -52,12 +52,17 @@ abstract public class BehaviorHelper {
 			DisplayMetrics dm = context.getResources().getDisplayMetrics();
 			// BehaviorHelper.distanceMin = (int) (120 * dm.density);
 			// BehaviorHelper.velocityThreshold = (int) (200 * dm.density);
-			BehaviorHelper.offPathMax = (int) (250 * dm.density);
+			BehaviorHelper.offPathMax = (int) (50 * dm.density);
 
 			ViewConfiguration vc = ViewConfiguration.get(context);
 			BehaviorHelper.distanceMin = vc.getScaledTouchSlop();
 			BehaviorHelper.velocityThreshold = vc
 					.getScaledMinimumFlingVelocity();
+
+			Log.i(FdConfig.DEBUG_TAG, "setupFling(): "
+					+ BehaviorHelper.distanceMin + ", "
+					+ BehaviorHelper.velocityThreshold + ", "
+					+ BehaviorHelper.offPathMax);
 		}
 
 		final GestureDetector gestureDetector = new GestureDetector(
