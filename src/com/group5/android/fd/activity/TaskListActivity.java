@@ -11,6 +11,8 @@ import android.os.PowerManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 
 import com.group5.android.fd.FdConfig;
 import com.group5.android.fd.Main;
@@ -20,6 +22,7 @@ import com.group5.android.fd.entity.TaskEntity;
 import com.group5.android.fd.entity.UserEntity;
 import com.group5.android.fd.service.TaskUpdaterService;
 import com.group5.android.fd.service.TaskUpdaterServiceReceiver;
+import com.group5.android.fd.view.TaskGroupView;
 
 /**
  * The activity to display a list of tasks
@@ -33,6 +36,7 @@ public class TaskListActivity extends ServerBasedActivity {
 
 	protected UserEntity m_user;
 	protected TaskAdapter m_taskAdapter;
+	protected View m_vwSelected = null;
 	public static boolean showAll = false;
 
 	protected BroadcastReceiver m_broadcastReceiverForNewTask = null;
@@ -174,5 +178,19 @@ public class TaskListActivity extends ServerBasedActivity {
 			// init the layout with existing task list
 			initLayout(taskList);
 		}
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+		if (arg1 instanceof TaskGroupView) {
+			((TaskGroupView) arg1).expandTasks();
+		}
+
+		if (m_vwSelected != null && m_vwSelected instanceof TaskGroupView
+				&& m_vwSelected != arg1) {
+			((TaskGroupView) m_vwSelected).collapseTasks();
+		}
+
+		m_vwSelected = arg1;
 	}
 }

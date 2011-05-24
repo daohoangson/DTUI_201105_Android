@@ -3,6 +3,7 @@ package com.group5.android.fd.view;
 import java.util.Iterator;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
@@ -11,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 
+import com.group5.android.fd.FdConfig;
 import com.group5.android.fd.R;
 import com.group5.android.fd.entity.AbstractEntity;
 import com.group5.android.fd.entity.TaskEntity;
@@ -125,6 +127,9 @@ public class TaskGroupView extends LinearLayout implements
 
 		m_vwTasks.setVisibility(View.VISIBLE);
 
+		Log.d(FdConfig.DEBUG_TAG, "TaskGroupView.expandTasks(): #"
+				+ group.groupId);
+
 		m_vwTasks.postInvalidate();
 	}
 
@@ -141,6 +146,9 @@ public class TaskGroupView extends LinearLayout implements
 		} else {
 			m_vwTasks.setVisibility(View.VISIBLE);
 		}
+
+		Log.d(FdConfig.DEBUG_TAG, "TaskGroupView.collapseTasks(): #"
+				+ group.groupId);
 
 		m_vwTasks.postInvalidate();
 	}
