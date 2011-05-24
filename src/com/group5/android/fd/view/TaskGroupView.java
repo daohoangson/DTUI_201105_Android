@@ -16,7 +16,6 @@ import com.group5.android.fd.entity.AbstractEntity;
 import com.group5.android.fd.entity.TaskEntity;
 import com.group5.android.fd.entity.TaskGroupEntity;
 import com.group5.android.fd.entity.UserEntity;
-import com.group5.android.fd.helper.FormattingHelper;
 
 /**
  * A view for {@link TaskGroupEntity}
@@ -33,6 +32,7 @@ public class TaskGroupView extends LinearLayout implements
 	protected TextView m_vwTaskGroupName;
 	protected TextView m_vwTaskGroupInfo;
 	protected CheckBox m_vwGroupCompleted;
+	protected LinearLayout m_vwTaskGroupInfoContainter;
 	protected LinearLayout m_vwTasks;
 
 	protected UserEntity m_user;
@@ -59,6 +59,7 @@ public class TaskGroupView extends LinearLayout implements
 		m_vwTaskGroupInfo = (TextView) findViewById(R.id.txtTaskGroupInfo);
 		m_vwGroupCompleted = (CheckBox) findViewById(R.id.chkGroupCompleted);
 		m_vwGroupCompleted.setOnCheckedChangeListener(this);
+		m_vwTaskGroupInfoContainter = (LinearLayout) findViewById(R.id.llTaskGroupInfoContainer);
 		m_vwTasks = (LinearLayout) findViewById(R.id.llTasks);
 
 		setGroup(group);
@@ -77,8 +78,6 @@ public class TaskGroupView extends LinearLayout implements
 		StringBuilder sb = new StringBuilder();
 		boolean someAreWaiting = false;
 		boolean someAreNotCompleted = false;
-		String tableName = "";
-		double totalPrice = 0;
 
 		Iterator<TaskEntity> iterator = group.tasks.iterator();
 		while (iterator.hasNext()) {
@@ -88,9 +87,6 @@ public class TaskGroupView extends LinearLayout implements
 				sb.append(", ");
 			}
 			sb.append(task.itemName);
-
-			tableName = task.tableName;
-			totalPrice += task.price;
 
 			if (!task.isSynced(AbstractEntity.TARGET_ALL)) {
 				someAreWaiting = true;
@@ -104,10 +100,15 @@ public class TaskGroupView extends LinearLayout implements
 		}
 
 		m_vwTaskGroupName.setText(sb.toString());
-		m_vwTaskGroupInfo.setText(tableName + " / "
-				+ FormattingHelper.formatPrice(totalPrice));
+		m_vwTaskGroupInfo.setText(group.getInfo(m_context));
 		m_vwGroupCompleted.setEnabled(!someAreWaiting);
 		m_vwGroupCompleted.setChecked(!someAreNotCompleted);
+
+		if (group.tasks.size() > 1) {
+			m_vwTaskGroupInfoContainter.setVisibility(View.VISIBLE);
+		} else {
+			m_vwTaskGroupInfoContainter.setVisibility(View.GONE);
+		}
 
 		if (TaskGroupView.m_expandedGroupId == group.groupId) {
 			expandTasks();
@@ -123,6 +124,7 @@ public class TaskGroupView extends LinearLayout implements
 		TaskGroupView.m_expandedGroupId = group.groupId;
 
 		m_vwTasks.setVisibility(View.VISIBLE);
+
 		m_vwTasks.postInvalidate();
 	}
 
@@ -134,7 +136,12 @@ public class TaskGroupView extends LinearLayout implements
 			TaskGroupView.m_expandedGroupId = 0;
 		}
 
-		m_vwTasks.setVisibility(View.GONE);
+		if (group.tasks.size() > 1) {
+			m_vwTasks.setVisibility(View.GONE);
+		} else {
+			m_vwTasks.setVisibility(View.VISIBLE);
+		}
+
 		m_vwTasks.postInvalidate();
 	}
 

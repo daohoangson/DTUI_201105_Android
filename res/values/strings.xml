@@ -85,5 +85,7 @@
 	<string name="httphelper_invalid_response_from_server">Invalid Response from Server</string>
 	
 	<!-- New strings please place under this line, it will be translated and move up later... -->
-	
+	<string name="total">Total</string>
+	<string name="x_item">%d item</string>
+	<string name="x_items">%d items</string>
 </resources>

@@ -53,7 +53,8 @@ public class TaskEntity extends AbstractEntity {
 		price = getDouble(jsonObject, "price", price);
 		tableName = getString(jsonObject, "table_name", tableName);
 
-		if (status == TaskEntity.STATUS_SERVED
+		if (status == TaskEntity.STATUS_PREPARED
+				|| status == TaskEntity.STATUS_SERVED
 				|| status == TaskEntity.STATUS_PAID) {
 			groupId = orderId;
 		}

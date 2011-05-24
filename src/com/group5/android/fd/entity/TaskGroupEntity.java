@@ -5,6 +5,8 @@ import java.util.List;
 
 import android.content.Context;
 
+import com.group5.android.fd.R;
+import com.group5.android.fd.helper.FormattingHelper;
 import com.group5.android.fd.helper.TaskRequestHelper;
 
 /**
@@ -23,12 +25,33 @@ public class TaskGroupEntity {
 	public int groupId = 0;
 	public List<TaskEntity> tasks = null;
 
-	@Override
-	public boolean equals(Object other) {
-		if (other instanceof TaskGroupEntity) {
-			return groupId == ((TaskGroupEntity) other).groupId;
+	public String getInfo(Context context) {
+		String tableName = "";
+		double totalPrice = 0;
+		int count = 0;
+		boolean isAllPaid = true;
+
+		Iterator<TaskEntity> iterator = tasks.iterator();
+		while (iterator.hasNext()) {
+			TaskEntity task = iterator.next();
+
+			tableName = task.tableName;
+			totalPrice += task.price;
+			count++;
+
+			if (task.status != TaskEntity.STATUS_PAID) {
+				isAllPaid = false;
+			}
+		}
+
+		if (isAllPaid) {
+			return tableName + " / " + context.getString(R.string.total) + ": "
+					+ FormattingHelper.formatPrice(totalPrice);
 		} else {
-			return false;
+			return tableName
+					+ " / "
+					+ context.getString(count == 1 ? R.string.x_item
+							: R.string.x_items, count);
 		}
 	}
 
@@ -85,6 +108,15 @@ public class TaskGroupEntity {
 		Iterator<TaskEntity> iterator = tasks.iterator();
 		while (iterator.hasNext()) {
 			iterator.next().selfInvalidate(target);
+		}
+	}
+
+	@Override
+	public boolean equals(Object other) {
+		if (other instanceof TaskGroupEntity) {
+			return groupId == ((TaskGroupEntity) other).groupId;
+		} else {
+			return false;
 		}
 	}
 }
