@@ -29,7 +29,7 @@ public class TaskGroupEntity {
 		String tableName = "";
 		double totalPrice = 0;
 		int count = 0;
-		boolean isAllPaid = true;
+		boolean isAllServed = true;
 
 		Iterator<TaskEntity> iterator = tasks.iterator();
 		while (iterator.hasNext()) {
@@ -39,12 +39,12 @@ public class TaskGroupEntity {
 			totalPrice += task.price;
 			count++;
 
-			if (task.status != TaskEntity.STATUS_PAID) {
-				isAllPaid = false;
+			if (task.status != TaskEntity.STATUS_SERVED) {
+				isAllServed = false;
 			}
 		}
 
-		if (isAllPaid) {
+		if (isAllServed) {
 			return tableName + " / " + context.getString(R.string.total) + ": "
 					+ FormattingHelper.formatPrice(totalPrice);
 		} else {

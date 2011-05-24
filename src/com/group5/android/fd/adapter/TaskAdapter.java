@@ -93,6 +93,15 @@ public class TaskAdapter extends BaseAdapter implements OnUpdatedListener,
 	}
 
 	/**
+	 * Clears the current task list (wait for new data for a refresh)
+	 */
+	public void clear() {
+		m_taskList.clear();
+
+		notifyDataSetChanged();
+	}
+
+	/**
 	 * Gets the <code>List</code> of {@link TaskEntity}
 	 * 
 	 * @return the list
@@ -234,6 +243,10 @@ public class TaskAdapter extends BaseAdapter implements OnUpdatedListener,
 				taskGroup2.tasks.add(task);
 			}
 		}
+
+		Log.d(FdConfig.DEBUG_TAG,
+				"TaskAdapter.notifyDataSetChanged(): Number of tasks = "
+						+ m_taskList.size());
 
 		super.notifyDataSetChanged();
 	}

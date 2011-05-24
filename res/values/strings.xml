@@ -88,4 +88,5 @@
 	<string name="total">Total</string>
 	<string name="x_item">%d item</string>
 	<string name="x_items">%d items</string>
+	<string name="show_all_tasks">Show All Tasks</string>
 </resources>

@@ -9,17 +9,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.group5.android.fd.FdConfig;
 import com.group5.android.fd.Main;
+import com.group5.android.fd.R;
 import com.group5.android.fd.adapter.TaskAdapter;
 import com.group5.android.fd.entity.TaskEntity;
 import com.group5.android.fd.entity.UserEntity;
 import com.group5.android.fd.service.TaskUpdaterService;
 import com.group5.android.fd.service.TaskUpdaterServiceReceiver;
-import com.group5.android.fd.view.TaskGroupView;
 
 /**
  * The activity to display a list of tasks
@@ -33,7 +33,7 @@ public class TaskListActivity extends ServerBasedActivity {
 
 	protected UserEntity m_user;
 	protected TaskAdapter m_taskAdapter;
-	protected View m_vwSelected = null;
+	public static boolean showAll = false;
 
 	protected BroadcastReceiver m_broadcastReceiverForNewTask = null;
 	protected PowerManager.WakeLock wakeLock;
@@ -117,6 +117,40 @@ public class TaskListActivity extends ServerBasedActivity {
 		};
 	}
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.task_list, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		MenuItem item = menu.findItem(R.id.menu_task_list_show_all);
+
+		if (TaskListActivity.showAll) {
+			item.setIcon(R.drawable.checkbox_on);
+		} else {
+			item.setIcon(R.drawable.checkbox_off);
+		}
+
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.menu_task_list_refresh:
+			m_taskAdapter.clear();
+			return true;
+		case R.id.menu_task_list_show_all:
+			TaskListActivity.showAll = !TaskListActivity.showAll;
+			m_taskAdapter.clear();
+			return true;
+		}
+
+		return false;
+	}
+
 	/**
 	 * Gets the pending tasks for current user and set them up.
 	 */
@@ -140,19 +174,5 @@ public class TaskListActivity extends ServerBasedActivity {
 			// init the layout with existing task list
 			initLayout(taskList);
 		}
-	}
-
-	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		if (arg1 instanceof TaskGroupView) {
-			((TaskGroupView) arg1).expandTasks();
-		}
-
-		if (m_vwSelected != null && m_vwSelected instanceof TaskGroupView
-				&& m_vwSelected != arg1) {
-			((TaskGroupView) m_vwSelected).collapseTasks();
-		}
-
-		m_vwSelected = arg1;
 	}
 }

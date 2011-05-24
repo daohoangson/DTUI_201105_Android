@@ -15,6 +15,7 @@ import android.os.IBinder;
 import android.util.Log;
 
 import com.group5.android.fd.FdConfig;
+import com.group5.android.fd.activity.TaskListActivity;
 import com.group5.android.fd.adapter.TaskAdapter;
 import com.group5.android.fd.entity.TaskEntity;
 import com.group5.android.fd.helper.HttpRequestAsyncTask;
@@ -179,6 +180,9 @@ public class TaskUpdaterService extends Service {
 			tasksUrl = UriStringHelper.addParam(tasksUrl, "last_updated",
 					m_taskAdapter != null ? m_taskAdapter
 							.getTaskListLastUpdated() : m_effectiveLastUpdated);
+			if (TaskListActivity.showAll) {
+				tasksUrl = UriStringHelper.addParam(tasksUrl, "all", 1);
+			}
 
 			new HttpRequestAsyncTask(null, tasksUrl) {
 
