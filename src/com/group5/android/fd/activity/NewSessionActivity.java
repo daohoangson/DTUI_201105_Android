@@ -488,7 +488,7 @@ public class NewSessionActivity extends Activity implements OnDismissListener,
 			m_confirmToFinishDialog = BehaviorHelper.setup(b.create());
 			m_confirmToFinishDialog.show();
 
-			return; // prevent finishing flow
+			return; // prevent default finish() flow
 		}
 
 		super.finish();
@@ -527,12 +527,12 @@ public class NewSessionActivity extends Activity implements OnDismissListener,
 	}
 
 	@Override
-	public void addFlingListener(OnTouchListener gestureListener) {
+	public void addFlingListeners(OnTouchListener gestureListener) {
 		m_vwListView.setOnTouchListener(gestureListener);
 	}
 
 	@Override
-	public void onFlighRight() {
+	public void onFlingRight() {
 		setResult(Activity.RESULT_CANCELED);
 		finish();
 	}

@@ -2,11 +2,11 @@ package com.group5.android.fd.helper;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.GestureDetector.SimpleOnGestureListener;
 
 import com.group5.android.fd.FdConfig;
@@ -21,9 +21,14 @@ abstract public class BehaviorHelper {
 
 	protected static boolean flingPrepared = false;
 	protected static int distanceMin = -1;
-	protected static int offPathMax = -1;
 	protected static int velocityThreshold = -1;
 
+	/**
+	 * Setups a dialog
+	 * 
+	 * @param dialog
+	 * @return the dialog (the same one)
+	 */
 	public static Dialog setup(Dialog dialog) {
 		// make our dialog to be a little more friendly
 		dialog.setCanceledOnTouchOutside(true);
@@ -31,16 +36,25 @@ abstract public class BehaviorHelper {
 		return dialog;
 	}
 
+	/**
+	 * Setups fling listeners and dependencies for it
+	 * 
+	 * @param context
+	 * @param flingReady
+	 */
 	public static void setupFling(Context context, final FlingReady flingReady) {
 		if (!BehaviorHelper.flingPrepared) {
 			// only set these things up once
 			BehaviorHelper.flingPrepared = true;
 
-			DisplayMetrics dm = context.getResources().getDisplayMetrics();
+			// DisplayMetrics dm = context.getResources().getDisplayMetrics();
+			// BehaviorHelper.distanceMin = (int) (120 * dm.density);
+			// BehaviorHelper.velocityThreshold = (int) (200 * dm.density);
 
-			BehaviorHelper.distanceMin = (int) (120 * dm.density);
-			BehaviorHelper.offPathMax = (int) (250 * dm.density);
-			BehaviorHelper.velocityThreshold = (int) (200 * dm.density);
+			ViewConfiguration vc = ViewConfiguration.get(context);
+			BehaviorHelper.distanceMin = vc.getScaledTouchSlop();
+			BehaviorHelper.velocityThreshold = vc
+					.getScaledMinimumFlingVelocity();
 		}
 
 		final GestureDetector gestureDetector = new GestureDetector(
@@ -49,7 +63,7 @@ abstract public class BehaviorHelper {
 					public boolean onFling(MotionEvent e1, MotionEvent e2,
 							float velocityX, float velocityY) {
 						try {
-							if (Math.abs(e1.getY() - e2.getY()) > BehaviorHelper.offPathMax) {
+							if (e1 == null || e2 == null) {
 								return false;
 							}
 
@@ -67,7 +81,7 @@ abstract public class BehaviorHelper {
 										.getSimpleName()
 										+ " is getting a RIGHT FLING");
 
-								flingReady.onFlighRight();
+								flingReady.onFlingRight();
 								return true;
 							} else if (e1.getY() - e2.getY() > BehaviorHelper.distanceMin
 									&& Math.abs(velocityY) > BehaviorHelper.velocityThreshold) {
@@ -105,18 +119,50 @@ abstract public class BehaviorHelper {
 			}
 		};
 
-		flingReady.addFlingListener(gestureListener);
+		flingReady.addFlingListeners(gestureListener);
 	}
 
+	/**
+	 * Object wants to support fling operations must implement this interface
+	 * and call {@link BehaviorHelper#setupFling(Context, FlingReady)} to setup
+	 * stuff
+	 * 
+	 * @author Dao Hoang Son
+	 * 
+	 */
 	public interface FlingReady {
-		public void addFlingListener(View.OnTouchListener gestureListener);
+		/**
+		 * Subclass must use
+		 * {@link View#setOnTouchListener(android.view.View.OnTouchListener)}
+		 * with its subview to enable them to listen to gesture events
+		 * 
+		 * @param gestureListener
+		 *            the ready to use listener
+		 */
+		public void addFlingListeners(View.OnTouchListener gestureListener);
 
+		/**
+		 * Subclass should implement this method to do action againts a left
+		 * fling
+		 */
 		public void onFlingLeft();
 
-		public void onFlighRight();
+		/**
+		 * Subclass should implement this method to do action againts a right
+		 * fling
+		 */
+		public void onFlingRight();
 
+		/**
+		 * Subclass should implement this method to do action againts an up
+		 * fling
+		 */
 		public void onFlingUp();
 
+		/**
+		 * Subclass should implement this method to do action againts a down
+		 * fling
+		 */
 		public void onFlingDown();
 	}
 }

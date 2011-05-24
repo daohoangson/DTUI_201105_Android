@@ -133,52 +133,11 @@ public class TaskListActivity extends ServerBasedActivity {
 		}
 
 		if (taskList == null) {
-			// String tasksUrl = UriStringHelper.buildUriString("tasks");
-			//
-			// new HttpRequestAsyncTask(this, tasksUrl) {
-			//
-			// @Override
-			// protected Object process(JSONObject jsonObject) {
-			// List<TaskEntity> taskList = new ArrayList<TaskEntity>();
-			//
-			// try {
-			// Object obj = jsonObject.get("tasks");
-			// if (obj instanceof JSONArray) {
-			// // this is the case when there are no tasks
-			// } else {
-			// JSONObject tasks = (JSONObject) obj;
-			// JSONArray taskIds = tasks.names();
-			// for (int i = 0; i < taskIds.length(); i++) {
-			// TaskEntity task = new TaskEntity();
-			// JSONObject jsonObject2 = tasks
-			// .getJSONObject(taskIds.getString(i));
-			// task.parse(jsonObject2);
-			// taskList.add(task);
-			// }
-			// }
-			// } catch (NullPointerException e) {
-			// Log.d(FdConfig.DEBUG_TAG,
-			// "getTasks/preProcess got NULL response");
-			// e.printStackTrace();
-			// } catch (JSONException e) {
-			//
-			// e.printStackTrace();
-			// }
-			//
-			// return taskList;
-			// }
-			//
-			// @Override
-			// protected void onSuccess(JSONObject jsonObject, Object processed)
-			// {
-			// if (processed != null && processed instanceof List<?>) {
-			// initLayout((List<TaskEntity>) processed);
-			// }
-			// }
-			//
-			// }.execute();
+			// no old task list is found
+			// pass an empty one
 			initLayout(new ArrayList<TaskEntity>());
 		} else {
+			// init the layout with existing task list
 			initLayout(taskList);
 		}
 	}

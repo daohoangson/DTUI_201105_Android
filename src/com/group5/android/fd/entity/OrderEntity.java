@@ -46,6 +46,7 @@ public class OrderEntity extends AbstractEntity {
 	 */
 	public boolean setTable(Context context, TableEntity table) {
 		this.table = table;
+		existingOrderItems.clear();
 
 		Log.i(FdConfig.DEBUG_TAG, "Order.setTable: " + table.tableName + " ("
 				+ table.tableId + ")");

@@ -38,20 +38,41 @@
 	<string name="confirm_order">Confirm</string>
 	<string name="continue_adding">Continue</string>
 	<string name="total_uppercase">TOTAL</string>
-	<!-- CategoryListActivity -->
 	<string name="change_table">Change Table</string>
+	<string name="newsessionactivity_confirm_cancel_this_order">Please confirm that you want to cancel this order?</string>
+	<!-- TableListActivity -->
+	<string name="tablelist_choose_table">Choose table to make an order:</string>
+	<string name="refresh">Refresh</string>
+	<string name="show_all_tables">Show All Tables</string>
+	<string name="current_order_x">Current Order: #%d</string>
+	<!-- CategoryListActivity -->
+	<string name="activitylist_choose_category">Choose category of food:</string>
+	<!-- ItemListActivity -->
+	<string name="itemlist_choose_item">Choose food: </string>
 	<!-- QRCode -->
 	<string name="scan">Scan</string>
 	<string name="please_scan_a_valid_qrcode">Please scan a valid QRCode!</string>
 	<string name="qrcode_found">QRCode Found</string>
 	<string name="please_scan_another_qrcode">Please scan another QRCode...</string>
 	<string name="problem_reading_qrcode">Problem reading QRCode</string>
+	<string name="press_ok_to_create_new_session_for_x">Press \'OK\' to create new session for \'%s\'</string>
+	<string name="press_ok_to_change_table_to_x">Press \'OK\' to change table to \'%s\'</string>
+	<string name="press_ok_to_add_item_x">Press \'OK\' to add item \'%s\'</string>
 	<!-- PreferencesActivity -->
 	<string name="credential">Credential</string>
 	<string name="pref_username">username</string>
 	<string name="pref_password">password</string>
 	<string name="pref_auto_login">auto_login</string>
 	<string name="preferences">Preferences</string>
+	<string name="server">Server</string>
+	<string name="pref_server_address">server_address</string>
+	<string name="server_address">Server Address</string>
+	<string name="pref_new_task_interval">new_task_interval</string>
+	<string name="new_task_interval">Interval</string>
+	<string name="new_task_interval_explain">This is the interval of which new tasks will be pulled from the server. Please enter the value in seconds</string>
+	<string name="pref_new_task_interval_slower">new_task_interval_slower</string>
+	<string name="new_task_interval_slower">Interval (SLOWER)</string>
+	<string name="new_task_interval_slower_explain">The normal interval will be degraded to this interval to preserve battery when needed. Please enter the value in seconds</string>
 	<!-- Dialogs -->
 	<string name="logindialog_login_failed">Oops, login request failed! Please try again...</string>
 	<string name="logindialog_please_enter_a_valid_username">Please enter a valid username</string>
@@ -62,26 +83,7 @@
 	<string name="httprequestasynctask_error">ERRORRRR!</string>
 	<string name="httprequestasynctask_unknown_error">Unknown Error</string>
 	<string name="httphelper_invalid_response_from_server">Invalid Response from Server</string>
-	<!-- Don't know where to put these -->
-	<string name="tablelist_choose_table">Choose table to make an order:</string>
-	<string name="activitylist_choose_category">Choose category of food:</string>
-	<string name="itemlist_choose_item">Choose food: </string>
 	
 	<!-- New strings please place under this line, it will be translated and move up later... -->
-	<string name="press_ok_to_create_new_session_for_x">Press \'OK\' to create new session for \'%s\'</string>
-	<string name="press_ok_to_change_table_to_x">Press \'OK\' to change table to \'%s\'</string>
-	<string name="press_ok_to_add_item_x">Press \'OK\' to add item \'%s\'</string>
-	<string name="refresh">Refresh</string>
-	<string name="show_all_tables">Show All Tables</string>
-	<string name="current_order_x">Current Order: #%d</string>
-	<string name="server">Server</string>
-	<string name="pref_server_address">server_address</string>
-	<string name="server_address">Server Address</string>
-	<string name="pref_new_task_interval">new_task_interval</string>
-	<string name="new_task_interval">Interval</string>
-	<string name="new_task_interval_explain">This is the interval of which new tasks will be pulled from the server. Please enter the value in seconds</string>
-	<string name="pref_new_task_interval_slower">new_task_interval_slower</string>
-	<string name="new_task_interval_slower">Interval (SLOWER)</string>
-	<string name="new_task_interval_slower_explain">The normal interval will be degraded to this interval to preserve battery when needed. Please enter the value in seconds</string>
-	<string name="newsessionactivity_confirm_cancel_this_order">Please confirm that you want to cancel this order?</string>
+	
 </resources>

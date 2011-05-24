@@ -148,12 +148,12 @@ abstract public class DbBasedActivity extends ListActivity implements
 	}
 
 	@Override
-	public void addFlingListener(OnTouchListener gestureListener) {
+	public void addFlingListeners(OnTouchListener gestureListener) {
 		getListView().setOnTouchListener(gestureListener);
 	}
 
 	@Override
-	public void onFlighRight() {
+	public void onFlingRight() {
 		setResult(Activity.RESULT_CANCELED);
 		finish();
 	}
