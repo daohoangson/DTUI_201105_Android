@@ -2,6 +2,7 @@ package com.group5.android.fd.helper;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -22,6 +23,7 @@ abstract public class BehaviorHelper {
 	protected static boolean flingPrepared = false;
 	protected static int distanceMin = -1;
 	protected static int velocityThreshold = -1;
+	protected static int offPathMax = -1;
 
 	/**
 	 * Setups a dialog
@@ -47,9 +49,10 @@ abstract public class BehaviorHelper {
 			// only set these things up once
 			BehaviorHelper.flingPrepared = true;
 
-			// DisplayMetrics dm = context.getResources().getDisplayMetrics();
+			DisplayMetrics dm = context.getResources().getDisplayMetrics();
 			// BehaviorHelper.distanceMin = (int) (120 * dm.density);
 			// BehaviorHelper.velocityThreshold = (int) (200 * dm.density);
+			BehaviorHelper.offPathMax = (int) (250 * dm.density);
 
 			ViewConfiguration vc = ViewConfiguration.get(context);
 			BehaviorHelper.distanceMin = vc.getScaledTouchSlop();
@@ -62,37 +65,37 @@ abstract public class BehaviorHelper {
 					@Override
 					public boolean onFling(MotionEvent e1, MotionEvent e2,
 							float velocityX, float velocityY) {
-						try {
-							if (e1 == null || e2 == null) {
-								return false;
-							}
+						if (e1 == null || e2 == null) {
+							return false;
+						}
 
-							if (e1.getX() - e2.getX() > BehaviorHelper.distanceMin
-									&& Math.abs(velocityX) > BehaviorHelper.velocityThreshold) {
+						if (Math.abs(e1.getY() - e2.getY()) < BehaviorHelper.offPathMax
+								&& Math.abs(velocityX) > BehaviorHelper.velocityThreshold) {
+							if (e1.getX() - e2.getX() > BehaviorHelper.distanceMin) {
 								Log.i(FdConfig.DEBUG_TAG, flingReady.getClass()
 										.getSimpleName()
 										+ " is getting a LEFT FLING");
 
 								flingReady.onFlingLeft();
 								return true;
-							} else if (e2.getX() - e1.getX() > BehaviorHelper.distanceMin
-									&& Math.abs(velocityX) > BehaviorHelper.velocityThreshold) {
+							} else if (e2.getX() - e1.getX() > BehaviorHelper.distanceMin) {
 								Log.i(FdConfig.DEBUG_TAG, flingReady.getClass()
 										.getSimpleName()
 										+ " is getting a RIGHT FLING");
 
 								flingReady.onFlingRight();
 								return true;
-							} else if (e1.getY() - e2.getY() > BehaviorHelper.distanceMin
-									&& Math.abs(velocityY) > BehaviorHelper.velocityThreshold) {
+							}
+						} else if (Math.abs(e1.getX() - e2.getX()) < BehaviorHelper.offPathMax
+								&& Math.abs(velocityY) > BehaviorHelper.velocityThreshold) {
+							if (e1.getY() - e2.getY() > BehaviorHelper.distanceMin) {
 								Log.i(FdConfig.DEBUG_TAG, flingReady.getClass()
 										.getSimpleName()
 										+ " is getting a UP FLING");
 
 								flingReady.onFlingUp();
 								return true;
-							} else if (e2.getY() - e1.getY() > BehaviorHelper.distanceMin
-									&& Math.abs(velocityY) > BehaviorHelper.velocityThreshold) {
+							} else if (e2.getY() - e1.getY() > BehaviorHelper.distanceMin) {
 								Log.i(FdConfig.DEBUG_TAG, flingReady.getClass()
 										.getSimpleName()
 										+ " is getting a DOWN FLING");
@@ -100,9 +103,6 @@ abstract public class BehaviorHelper {
 								flingReady.onFlingDown();
 								return true;
 							}
-
-						} catch (Exception e) {
-							e.printStackTrace();
 						}
 
 						return false;
