@@ -124,7 +124,12 @@ abstract public class AbstractEntity implements Serializable {
 		} catch (Exception e) {
 			Log.e(FdConfig.DEBUG_TAG, getClass().getSimpleName()
 					+ ".parse(JSONObject): " + e.getMessage());
-			return new String(defaultValue);
+
+			if (defaultValue != null) {
+				return new String(defaultValue);
+			} else {
+				return null;
+			}
 		}
 	}
 

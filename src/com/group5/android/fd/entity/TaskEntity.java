@@ -29,6 +29,7 @@ public class TaskEntity extends AbstractEntity {
 	public String itemName = "";
 	public double price = 0;
 	public String tableName = "";
+	public String assignee = null;
 
 	final public static int STATUS_WAITING = 0;
 	final public static int STATUS_PREPARED = 1;
@@ -52,6 +53,7 @@ public class TaskEntity extends AbstractEntity {
 		itemName = getString(jsonObject, "item_name", itemName);
 		price = getDouble(jsonObject, "price", price);
 		tableName = getString(jsonObject, "table_name", tableName);
+		assignee = getString(jsonObject, "username", null);
 
 		if (status == TaskEntity.STATUS_PREPARED
 				|| status == TaskEntity.STATUS_SERVED
@@ -80,6 +82,9 @@ public class TaskEntity extends AbstractEntity {
 		}
 		if (other.tableName.length() > 0) {
 			tableName = other.tableName;
+		}
+		if (other.assignee != null) {
+			assignee = other.assignee;
 		}
 
 		groupId = other.groupId;

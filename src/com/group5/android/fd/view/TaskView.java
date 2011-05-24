@@ -10,6 +10,7 @@ import com.group5.android.fd.R;
 import com.group5.android.fd.entity.AbstractEntity;
 import com.group5.android.fd.entity.TaskEntity;
 import com.group5.android.fd.entity.UserEntity;
+import com.group5.android.fd.helper.FormattingHelper;
 
 /**
  * A view for {@link TaskEntity}
@@ -60,7 +61,18 @@ public class TaskView extends AbstractView implements OnCheckedChangeListener {
 	public void setTask(TaskEntity task) {
 		this.task = task;
 
-		setTextViews(task.itemName, task.tableName);
+		String info = "";
+		if (task.groupId == 0) {
+			info += task.tableName;
+		} else {
+			info += FormattingHelper.formatPrice(task.price);
+		}
+		if (task.isCompleted(m_user) && task.assignee != null
+				&& task.assignee.length() > 0) {
+			info += " (" + task.assignee + ")";
+		}
+
+		setTextViews(task.itemName, info);
 		setImage(task);
 
 		m_vwCompleted.setEnabled(task.isSynced(AbstractEntity.TARGET_ALL));
