@@ -165,7 +165,7 @@ abstract public class DbBasedActivity extends ListActivity implements
 
 	@Override
 	public void onFlingUp() {
-		openOptionsMenu();
+		// openOptionsMenu();
 	}
 
 	@Override

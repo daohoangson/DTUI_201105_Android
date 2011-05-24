@@ -126,7 +126,7 @@ abstract public class ServerBasedActivity extends ListActivity implements
 
 	@Override
 	public void onFlingUp() {
-		openOptionsMenu();
+		// openOptionsMenu();
 	}
 
 	@Override
