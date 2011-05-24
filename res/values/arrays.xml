@@ -3,9 +3,11 @@
 	<string-array name="entriesvalues_server_address">
 		<item>fdconfig</item>
 		<item>http://10.0.2.2/dtui/</item>
+		<item>http://k53cc.org/dtui_group5/</item>
 	</string-array>
 	<string-array name="entries_server_address">
 		<item>Compiled configuration</item>
 		<item>Host Machine</item>
+		<item>K53CC dot ORG</item>
 	</string-array>
 </resources>

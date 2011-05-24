@@ -194,6 +194,9 @@ public class NewSessionActivity extends Activity implements OnDismissListener,
 					finish();
 				}
 				break;
+			case REQUEST_CODE_ITEM:
+				startCategoryList();
+				break;
 			case IntentIntegrator.REQUEST_CODE:
 				// mark the flag that user have canceled the scanner
 				m_useScanner = false;
